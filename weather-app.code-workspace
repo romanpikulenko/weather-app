@@ -1,0 +1,43 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+	],
+	"settings": {
+		"python.defaultInterpreterPath": ".\\.venv\\Scripts\\python.exe",
+		"python.linting.enabled": true,
+		// "python.linting.flake8Enabled": true,
+		"python.linting.pylintEnabled": true,
+		//"python.linting.prospectorEnabled": true,
+		"python.linting.pylintArgs": [
+			"--disable=C0114,C0115,C0116",
+			"--disable=django-not-configured",
+			"--load-plugins",
+			"pylint_django",
+			"--django-settings-module=practice_django.settings",
+			"--max-line-length=120"
+		],
+		"python.linting.lintOnSave": true,
+		"python.languageServer": "Pylance",
+		"python.analysis.autoImportCompletions": true,
+		"python.analysis.typeCheckingMode": "basic",
+		"editor.formatOnSave": true,
+		"python.formatting.provider": "none",
+		"explorer.copyRelativePathSeparator": "/",
+		"python.formatting.autopep8Args": [
+			"--max-line-length",
+			"120"
+		],
+		"python.formatting.blackArgs": [
+			"--line-length",
+			"120"
+		],
+		"editor.codeActionsOnSave": {
+			"source.organizeImports": true
+		},
+		"[python]": {
+			"editor.defaultFormatter": "ms-python.black-formatter"
+		},
+	}
+}

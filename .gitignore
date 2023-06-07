@@ -1,0 +1,9 @@
+.ipynb_checkpoints
+.pytest_cache
+.venv
+__pycache__
+/static
+wiki/GENERIC/generic/wiki/GENERIC/generic/build
+*.pyc
+*.ipynb
+db.sqlite3
