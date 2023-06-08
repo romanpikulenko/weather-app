@@ -1,7 +1,9 @@
+from os import name
+
 import requests
 from django.conf import settings
 from django.db.models.functions import Lower
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 from weather.forms import CityForm
 
@@ -15,6 +17,8 @@ def index(request):
     )
 
     err_msg = ""
+    message = ""
+    message_class = ""
 
     if request.method == "POST":
         form = CityForm(request.POST)
@@ -24,9 +28,21 @@ def index(request):
             existing_city_count = City.objects.filter(name__icontains=new_city).count()
 
             if not existing_city_count:
-                form.save()
+                r = requests.get(openweather_url.format(new_city)).json()
+
+                if r["cod"] != 200:
+                    err_msg = r["message"]
+                else:
+                    form.save()
             else:
-                err_msg = f"The city {new_city} alredy exists"
+                err_msg = f"City {new_city} alredy exists"
+
+            if err_msg:
+                message = err_msg
+                message_class = "is-danger"
+            else:
+                message = f"City {new_city} added successfully"
+                message_class = "is-success"
 
     form = CityForm()
 
@@ -47,6 +63,14 @@ def index(request):
     context = {
         "weather_data": weather_data,
         "form": form,
+        "message": message,
+        "message_class": message_class,
     }
 
     return render(request, "weather/weather.html", context)
+
+
+def delete_city(request, city_name):
+    City.objects.get(name=city_name).delete()
+
+    return redirect("home")
