@@ -31,7 +31,7 @@ def index(request):
                 r = requests.get(openweather_url.format(new_city)).json()
 
                 if r["cod"] != 200:
-                    err_msg = r["message"]
+                    err_msg = f"{new_city}: {r['message']}"
                 else:
                     form.save()
             else:
